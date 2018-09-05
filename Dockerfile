@@ -1,17 +1,13 @@
-FROM ubuntu:16.04
-
-ENV DEBIAN_FRONTEND noninteractive
+FROM debian:stretch-slim
 
 RUN apt-get update && \
-    apt-get -y install gcc build-essential zlib1g zlib1g-dev && \
+    apt-get install -y wget gcc libz-dev && \
     rm -rf /var/lib/apt/lists/*
 
-ARG GRAALVM_BUILD
+ARG VERSION=1.0.0-rc6
+RUN wget https://github.com/oracle/graal/releases/download/vm-$VERSION/graalvm-ce-$VERSION-linux-amd64.tar.gz && \
+    tar -xvzf graalvm-ce-$VERSION-linux-amd64.tar.gz && \
+    rm graalvm-ce-$VERSION-linux-amd64.tar.gz
 
-ENV GRAALVM_VERSION=graalvm-ce-${GRAALVM_BUILD}
-
-ADD ${GRAALVM_VERSION}-linux-amd64.tar.gz /opt/java
-
-ENV GRAALVM_HOME=/opt/java/${GRAALVM_VERSION}
-ENV JAVA_HOME=${GRAALVM_HOME}
-ENV PATH=${PATH}:${JAVA_HOME}/bin
+ENV JAVA_HOME=/graalvm-ce-$VERSION
+ENV PATH=/graalvm-ce-$VERSION/bin:$PATH

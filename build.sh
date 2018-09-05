@@ -2,4 +2,4 @@
 
 GRAALVM_BUILD=${GRAALVM_BUILD:-"1.0.0-rc6"}
 
-docker build . --build-arg GRAALVM_BUILD=$GRAALVM_BUILD --tag panga/graalvm-ce:$GRAALVM_BUILD --tag panga/graalvm-ce:latest
+docker build . --build-arg GRAALVM_BUILD=$GRAALVM_BUILD --tag graemerocher/graalvm-ce:$GRAALVM_BUILD --tag graemerocher/graalvm-ce:latest
